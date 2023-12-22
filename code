@@ -1,0 +1,50 @@
+import json
+
+json_data = '''
+{
+  "teams": [
+    {
+      "name": "DET",
+      "records": {
+        "MIN": "-",
+        "GB": "-",
+        "CHI": "-"
+      }
+    },
+    {
+      "name": "MIN",
+      "records": {
+        "DET": "-",
+        "GB": "-",
+        "CHI": "-"
+      }
+    },
+    {
+      "name": "GB",
+      "records": {
+        "DET": "-",
+        "MIN": "-",
+        "CHI": "-"
+      }
+    },
+    {
+      "name": "CHI",
+      "records": {
+        "DET": "-",
+        "MIN": "-",
+        "GB": "-"
+      }
+    }
+  ]
+}
+'''
+
+data = json.loads(json_data)
+
+teams = [team["name"] for team in data["teams"]]
+
+print("\t" + "\t".join(teams))
+
+for team1 in teams:
+    team1_data = next(item for item in data["teams"] if item["name"] == team1)
+    print(team1 + "\t" + "\t".join(team1_data["records"].get(team2, "-") for team2 in teams))
